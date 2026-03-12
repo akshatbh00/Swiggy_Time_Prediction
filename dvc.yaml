@@ -31,9 +31,9 @@ stages:
     - models/preprocessor.joblib
 
   train:
-    cmd: python src/models/train.py
+    cmd: python src/models/train_model.py
     deps:
-    - src/models/train.py
+    - src/models/train_model.py
     - data/processed/train_trans.csv
     params:
     - Train.Random_Forest
