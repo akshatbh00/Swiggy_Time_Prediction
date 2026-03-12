@@ -109,7 +109,7 @@ def join_X_and_y(X: pd.DataFrame, y: pd.Series):
 if __name__ == "__main__":
     # paths
     # root path
-    # root path
+    # root path-----------------------------__file__-----------------------
     root_path = Path("Swiggy_Time_Prediction\data\raw\swiggy.csv").parent.parent.parent
     # data load path
     train_data_path = root_path / "data" / "interim" / "train.csv"
