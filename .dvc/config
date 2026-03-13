@@ -1,0 +1,4 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = https://dagshub.com/akshatbh498/Swiggy_Time_Prediction.mlflow
