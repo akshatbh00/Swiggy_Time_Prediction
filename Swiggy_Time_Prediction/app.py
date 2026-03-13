@@ -9,6 +9,8 @@ import joblib
 from mlflow import MlflowClient
 from sklearn import set_config
 from scripts.data_clean_utils import perform_data_cleaning
+from sklearn.dummy import DummyRegressor
+
 
 # set the output as pandas
 set_config(transform_output='pandas')
@@ -22,7 +24,7 @@ dagshub.init(repo_owner='akshatbh498',
              mlflow=True)
 
 # set the mlflow tracking server
-mlflow.set_tracking_uri("https://github.com/akshatbh00/Swiggy_Time_Prediction.git")
+mlflow.set_tracking_uri("https://dagshub.com/akshatbh498/Swiggy_Time_Prediction.mlflow")
 
 
 class Data(BaseModel):  
@@ -94,8 +96,9 @@ stage = "Production"
 model_path = f"models:/{model_name}/{stage}"
 
 # load the latest model from model registry
-model = mlflow.sklearn.load_model(model_path)
-
+#model = mlflow.sklearn.load_model(model_path)
+model = DummyRegressor(strategy="mean")  # always predicts the mean
+model.fit([[0]], [0])  # dummy fit so pipeline works
 # load the preprocessor
 preprocessor_path = "models/preprocessor.joblib"
 preprocessor = load_transformer(preprocessor_path)
@@ -149,3 +152,14 @@ def do_predictions(data: Data):
    
 if __name__ == "__main__":
     uvicorn.run(app="app:app",host="0.0.0.0",port=8000)
+
+
+
+
+
+
+from sklearn.pipeline import Pipeline
+model_pipe = Pipeline(steps=[
+    ('preprocess', preprocessor),
+    ('regressor', model)
+])
